@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema({
   },
   postImg: {
     type: String,
-    match: /^http:\/\/.*\.(jpg|png)$/,
+    match: /^(http:\/\/|https:\/\/).*\.(jpg|png)$/,
     required: true
   },
   postDate: {
