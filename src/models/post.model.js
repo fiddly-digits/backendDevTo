@@ -47,11 +47,18 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   likes: {
+    // * Este es para medir los likes de cada post del extra
     type: Number,
     required: true
   },
   bookmarks: {
+    // * Este es para medir los favs de cada post del extra
     type: Number,
+    required: true
+  },
+  postOwner: {
+    // * el id del autor del post
+    type: String,
     required: true
   }
 });
