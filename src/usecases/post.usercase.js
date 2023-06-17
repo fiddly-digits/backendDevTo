@@ -10,4 +10,14 @@ const getById = (id) =>{
     return post;
 }
 
-module.exports = {list, getById}
+const create =(data)=> {
+    const post = Post.create(data)
+    return post
+}
+
+const erase =(id) =>{
+    const post = Post.findByIdAndDelete(id)
+    return post
+}
+
+module.exports = {list, getById, create, erase}
