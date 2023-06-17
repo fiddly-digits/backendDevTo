@@ -62,19 +62,28 @@ router.post ("/", async(req, res) => {
 })
 
 router.delete("/:id", async (req, res) => {
+    if(req.params.id === 0){ //Aqui lo intente === 0  y tambien con null
+        res.json({ 
+            message:"I can not delete a post without an id"})
+    }
     try{
         const post = await erase(req.params.id)
         res.json({
             success:true, 
-            data: post,
-            message: `El post ${req.params.id} ha sido eliminado`
+            message: `The post #id: ${req.params.id} was deleted`
             
         })
+        if (post != req.params.id ){
+            const error = new error ("Post not found");
+            error.status = 404;
+            throw error;    
+        }
+        
     }catch(err){
     res.status(err.status || 500)
     res.json({
         success:false,
-        message: err.message
+        message: "Post not found"
     })
     }      
 })
