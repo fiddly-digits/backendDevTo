@@ -16,6 +16,10 @@ const register = async (data) => {
   const hashedPassword = await bcrypt.hash(data.login.password, 10);
   data.login.password = hashedPassword;
 
+  const time = new Date();
+  const msec = Date.parse(time);
+  data['joined'] = msec;
+
   const user = await User.create(data);
   return user;
 };
