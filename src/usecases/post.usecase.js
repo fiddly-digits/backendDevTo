@@ -7,9 +7,19 @@ const list = () => {
     return posts ;
 }
 
+//GET POST BY ID
+const getOnePost = ( id ) => {
+    const postById = Post.findById( id )
+    return postById
+}
+
+// DELETE POST 
 const remove =(id) =>{
     const post = Post.findByIdAndDelete(id)
     return post
 }
 
-module.exports = { list, remove }
+
+
+
+module.exports = { list, remove, getOnePost }
