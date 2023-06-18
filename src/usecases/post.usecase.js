@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+
 const Post = require("../models/post.model");
 
 //GET POSTS
@@ -7,6 +7,9 @@ const list = () => {
     return posts ;
 }
 
+const remove =(id) =>{
+    const post = Post.findByIdAndDelete(id)
+    return post
+}
 
-
-module.exports = { list }
+module.exports = { list, remove }

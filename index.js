@@ -5,6 +5,8 @@ const app = require('./src/server.js');
 const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const dbURL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`;
 
+//console.log("variables de entorno", process.env);
+
 mongoose
   .connect(dbURL)
   .then(() => {
@@ -16,3 +18,4 @@ mongoose
   .catch((err) => {
     console.log('DB Connection Error');
   });
+
