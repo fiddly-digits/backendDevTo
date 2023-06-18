@@ -15,9 +15,9 @@ const create =(data)=> {
     return post
 }
 
-const erase =(id) =>{
+const remove =(id) =>{
     const post = Post.findByIdAndDelete(id)
     return post
 }
 
-module.exports = {list, getById, create, erase}
+module.exports = {list, getById, create, remove}
