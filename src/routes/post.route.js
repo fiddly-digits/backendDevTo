@@ -85,6 +85,22 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+router.post ("/", async (req, res) => {
+  try{
+      const newPost = await create(req.body)
+      res.status(201);
+      res.json({
+          success: true,
+          data: newPost
+      })
+  }catch(err) {
+      res.status(err.status || 500)
+      res.json({
+          success: false,
+          message: err.message
+      })
+  }
+})
 
 
 
