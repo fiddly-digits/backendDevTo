@@ -36,7 +36,13 @@ const update = async (id, data) => {
 
 } 
 
+const create = (data) =>{
+    const post = Post.create(data)
+    return post;
+}
 
 
 
-module.exports = { list, remove, getOnePost, update }
+
+
+module.exports = { list, remove, getOnePost, update, create }
