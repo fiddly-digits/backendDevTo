@@ -1,5 +1,5 @@
 const express = require("express");
-const { list, remove } = require ("../usecases/post.usecase");
+const { list, remove, getOnePost } = require ("../usecases/post.usecase");
 const createError = require("http-errors")
 const router= express.Router();
 
@@ -20,6 +20,30 @@ router.get ("/", async (req, res) => {
         })
     }
 })
+
+// GET POST BY ID
+
+router.get("/:id", async (req, res) => {
+  try {
+    const postById = await getOnePost(req.params.id);
+    if (!postById) {
+      throw createError(404, "The id was not existant"); 
+    }
+      res.status(200);
+    res.json({
+      success: true, 
+      data: postById
+    }) 
+  } catch (err) {
+    res.status(err.status || 500 );
+    res.json({
+      success:false, 
+      message: "Post not found"
+    })
+  }
+}); 
+
+// DELETE BY ID
 
 router.delete("/:id", async (req, res) => {
   try {
