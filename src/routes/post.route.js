@@ -1,9 +1,25 @@
 const express = require("express");
-const app= express()
-const {remove} = require("../usecases/post.usecase");
+const { list, remove } = require ("../usecases/post.usecase");
 const createError = require("http-errors")
+const router= express.Router();
 
-const router = express.Router();
+//GET POSTS
+
+router.get ("/", async (req, res) => {
+    try{
+        const posts=await list();
+        res.json({
+            success: true,
+            data: posts
+        })
+    } catch(err){
+        res.status(400);
+        res.json ({
+            success: false,
+            message: err.message
+        })
+    }
+})
 
 router.delete("/:id", async (req, res) => {
   try {
@@ -24,4 +40,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+
+
 module.exports = router;
+
