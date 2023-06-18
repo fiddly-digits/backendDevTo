@@ -1,6 +1,6 @@
 const express = require("express");
 const app= express()
-const {list, getById, create, remove} = require("../usecases/post.usercase");
+const {remove} = require("../usecases/post.usecase");
 const createError = require("http-errors")
 
 const router = express.Router();
