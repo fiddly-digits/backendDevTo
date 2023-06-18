@@ -44,6 +44,8 @@ const create = (data, postOwner) => {
   console.log('fecha parseada ', msec);
   console.log('El Post Owner en el usecase', postOwner);
   data['isRelevant'] = Math.random() < 0.5;
+  data['likes'] = 0;
+  data['bookmarks'] = 0;
   data['postDate'] = msec;
   data['postOwner'] = postOwner;
   const post = Post.create(data);
