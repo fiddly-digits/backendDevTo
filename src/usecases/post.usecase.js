@@ -1,5 +1,4 @@
 
-const { publicDecrypt } = require("crypto");
 const Post = require("../models/post.model");
 
 //GET POSTS
@@ -8,14 +7,19 @@ const list = () => {
     return posts ;
 }
 
+//GET POST BY ID
+const getOnePost = ( id ) => {
+    const postById = Post.findById( id )
+    return postById
+}
+
+// DELETE POST 
 const remove =(id) =>{
     const post = Post.findByIdAndDelete(id)
     return post;
 }
 
-
-
-// PATCH POST /post/:id (protegido, solo usuarios con token pueden hacer esto)
+// PATCH POST /post/:id
 
 const update = async (id, data) => {
     const post = await Post.findById(id);
@@ -34,4 +38,5 @@ const update = async (id, data) => {
 
 
 
-module.exports = { list, remove, update }
+
+module.exports = { list, remove, getOnePost, update }
