@@ -42,4 +42,14 @@ const login = async (email, plainPassword) => {
   return token;
 };
 
-module.exports = { register, login };
+const get = async () => {
+  const users = await User.find();
+  return users;
+};
+
+const getOneUser = async (id) => {
+  const user = await User.findOne(id);
+  return user;
+};
+
+module.exports = { register, login, get, getOneUser };

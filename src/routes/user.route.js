@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register } = require('../usecases/user.usecase.js');
+const { register, get, getOneUser } = require('../usecases/user.usecase.js');
 
 router.post('/', async (req, res) => {
   try {
@@ -9,6 +9,21 @@ router.post('/', async (req, res) => {
     res.json({
       success: true,
       data: createdUser
+    });
+  } catch (err) {
+    res.status(err.status || 500).json({
+      success: false,
+      message: err.message
+    });
+  }
+});
+
+router.get('/', async (req, res) => {
+  try {
+    const users = await get();
+    res.json({
+      success: true,
+      data: users
     });
   } catch (err) {
     res.status(err.status || 500).json({
