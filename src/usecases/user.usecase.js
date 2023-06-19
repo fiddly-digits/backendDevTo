@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 const User = require('../models/user.model.js');
 const jwt = require('../lib/jwt.lib.js');
+const Post =require('../models/post.model');
 
 const register = async (data) => {
   console.log(data.login.password);
@@ -52,4 +53,14 @@ const getOneUser = async (id) => {
   return user;
 };
 
-module.exports = { register, login, get, getOneUser };
+//GET POST BY ID USER
+const getUserPosts= async (id) => {
+  const userPosts = await Post.find({postOwner: id});
+  console.log(userPosts);
+  return userPosts;
+} 
+
+//FILTER POSTS
+
+
+module.exports = { register, login, get, getOneUser, getUserPosts };
