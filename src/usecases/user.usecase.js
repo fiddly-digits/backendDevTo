@@ -60,7 +60,5 @@ const getUserPosts= async (id) => {
   return userPosts;
 } 
 
-//FILTER POSTS
-
 
 module.exports = { register, login, get, getOneUser, getUserPosts };

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { register, get, getOneUser, getUserPosts } = require('../usecases/user.usecase.js');
 
+// REGISTER NEW USER 
 router.post('/', async (req, res) => {
   try {
     const createdUser = await register(req.body);
@@ -49,6 +50,7 @@ router.get('/:id/posts', async (req, res) => {
     });
   }
 });
+
 
 
 

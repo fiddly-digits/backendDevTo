@@ -1,9 +1,18 @@
 const Post = require('../models/post.model');
 
 //GET POSTS
-const list = () => {
-  const posts = Post.find();
-  return posts;
+const list = (queryToSearch) => {
+  let posts = {};
+  if (!queryToSearch) {
+    posts = Post.find();
+  } else {
+    posts = Post.find({
+      $or: [
+        { postBody: new RegExp (queryToSearch, 'i')},
+        { postTitle : new RegExp (queryToSearch, 'i')}
+      ]
+    });
+  } return posts;
 };
 
 //GET POST BY ID
@@ -51,5 +60,7 @@ const create = (data, postOwner) => {
   const post = Post.create(data);
   return post;
 };
+
+
 
 module.exports = { list, remove, getOnePost, update, create };

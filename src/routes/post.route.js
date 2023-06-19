@@ -5,7 +5,7 @@ const {
   remove,
   getOnePost,
   update,
-  create
+  create,
 } = require('../usecases/post.usecase');
 const createError = require('http-errors');
 const router = express.Router();
@@ -15,7 +15,7 @@ const auth = require('../middlewares/auth.middleware.js');
 
 router.get('/', async (req, res) => {
   try {
-    const posts = await list();
+    const posts = await list(req.query.search);
     res.json({
       success: true,
       data: posts
@@ -109,5 +109,6 @@ router.post('/', auth, async (req, res) => {
     });
   }
 });
+
 
 module.exports = router;
