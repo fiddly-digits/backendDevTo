@@ -48,4 +48,12 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+// * Oculta la login info de la respuesta
+userSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.__v;
+  delete obj.login;
+  return obj;
+};
+
 module.exports = mongoose.model('Users', userSchema, 'Users');

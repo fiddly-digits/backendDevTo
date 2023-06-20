@@ -20,6 +20,12 @@ const commentSchema = new mongoose.Schema({
   }
 });
 
+commentSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.__v;
+  return obj;
+};
+
 module.exports = mongoose.model('Comments', commentSchema, 'Comments');
 
 /* 

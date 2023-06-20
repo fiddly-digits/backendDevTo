@@ -63,6 +63,13 @@ const postSchema = new mongoose.Schema({
   }
 });
 
+// * Oculta datos innecesarios de la respuesta.
+postSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.__v;
+  return obj;
+};
+
 module.exports = mongoose.model('Posts', postSchema, 'Posts');
 
 // ! Validar si esto es plausible dentro del mismo post, o podemos hacer una relacion a otra db que se llame comments

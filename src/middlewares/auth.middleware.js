@@ -7,8 +7,8 @@ const auth = async (req, res, next) => {
     const authorization = req.headers.authorization || '';
     const token = authorization.replace('Bearer ', '');
     const isVerified = jwt.verify(token);
-    console.log('verified ID', isVerified.id);
-    res.locals.postOwner = isVerified.id;
+    //console.log('verified ID', isVerified.id);
+    res.locals.owner = isVerified.id;
     next();
   } catch (err) {
     res.status(401).json({
