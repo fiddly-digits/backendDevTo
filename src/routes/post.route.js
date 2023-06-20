@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const deletedPost = await remove(req.params.id, res.locals.postOwner);
+    const deletedPost = await remove(req.params.id, res.locals.owner);
     if (!deletedPost) {
       throw createError(404, 'The id was non existant');
     }
@@ -75,11 +75,7 @@ router.delete('/:id', auth, async (req, res) => {
 // PATCH
 router.patch('/:id', auth, async (req, res) => {
   try {
-    const updatedPost = await update(
-      req.params.id,
-      req.body,
-      res.locals.postOwner
-    );
+    const updatedPost = await update(req.params.id, req.body, res.locals.owner);
     if (!updatedPost) {
       throw createError(404, 'The id was non existant');
     }
@@ -98,8 +94,8 @@ router.patch('/:id', auth, async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
   try {
-    //console.log('El Post Owner en el router', res.locals.postOwner);
-    const newPost = await create(req.body, res.locals.postOwner);
+    //console.log('El Post Owner en el router', res.locals.owner);
+    const newPost = await create(req.body, res.locals.owner);
     res.status(201);
     res.json({
       success: true,
