@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const deletedPost = await remove(req.params.id);
+    const deletedPost = await remove(req.params.id, res.locals.postOwner);
     if (!deletedPost) {
       throw createError(404, 'The id was non existant');
     }
@@ -67,7 +67,7 @@ router.delete('/:id', auth, async (req, res) => {
     res.status(err.status || 500);
     res.json({
       success: false,
-      message: 'Post not found'
+      message: err.message
     });
   }
 });
@@ -75,7 +75,11 @@ router.delete('/:id', auth, async (req, res) => {
 // PATCH
 router.patch('/:id', auth, async (req, res) => {
   try {
-    const updatedPost = await update(req.params.id, req.body);
+    const updatedPost = await update(
+      req.params.id,
+      req.body,
+      res.locals.postOwner
+    );
     if (!updatedPost) {
       throw createError(404, 'The id was non existant');
     }
@@ -87,7 +91,7 @@ router.patch('/:id', auth, async (req, res) => {
     res.status(err.status || 500);
     res.json({
       success: false,
-      message: 'Post not found'
+      message: err.message
     });
   }
 });
