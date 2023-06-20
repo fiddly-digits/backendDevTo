@@ -12,12 +12,19 @@ const auth = async (req, res, next) => {
     const isVerified = jwt.verify(token);
     console.log(isVerified.id);
     res.locals.postOwner = isVerified.id;
-    console.log('Params id', req.params.id);
-    if (req.params.id !== undefined) {
-      const postbyID = await Post.findById(req.params.id);
-      const isIdentical = isVerified.id === postbyID.postOwner;
-      if (!isIdentical) {
-        throw createError(403, 'You are not the owner of this post');
+    let isLikesOrBookmarks =
+      Object.keys(req.body)[0] === 'likes' ||
+      Object.keys(req.body)[0] === 'bookmarks';
+    console.log(req.body);
+    console.log(req.params.id);
+    if (!isLikesOrBookmarks) {
+      if (req.params.id !== undefined) {
+        const postbyID = await Post.findById(req.params.id);
+        const isIdentical = isVerified.id === postbyID.postOwner;
+        console.log('es identico?', isIdentical);
+        if (!isIdentical) {
+          throw createError(403, 'You are not the owner of this post');
+        }
       }
     }
     next();
