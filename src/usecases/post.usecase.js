@@ -8,11 +8,12 @@ const list = (queryToSearch) => {
   } else {
     posts = Post.find({
       $or: [
-        { postBody: new RegExp (queryToSearch, 'i')},
-        { postTitle : new RegExp (queryToSearch, 'i')}
+        { postBody: new RegExp(queryToSearch, 'i') },
+        { postTitle: new RegExp(queryToSearch, 'i') }
       ]
     });
-  } return posts;
+  }
+  return posts;
 };
 
 //GET POST BY ID
@@ -60,7 +61,5 @@ const create = (data, postOwner) => {
   const post = Post.create(data);
   return post;
 };
-
-
 
 module.exports = { list, remove, getOnePost, update, create };
