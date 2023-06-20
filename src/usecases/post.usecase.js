@@ -1,4 +1,5 @@
 const Post = require('../models/post.model');
+const createError = require('http-errors');
 
 //GET POSTS
 const list = (queryToSearch) => {
@@ -23,27 +24,40 @@ const getOnePost = (id) => {
 };
 
 // DELETE POST
-const remove = (id) => {
-  const post = Post.findByIdAndDelete(id);
-  return post;
+const remove = async (postID, ownerID) => {
+  const post = await Post.findById(postID);
+  const isIdentical = post.postOwner === ownerID;
+  if (!isIdentical) {
+    throw createError(403, 'You are not the owner of this post');
+  }
+  const postDeleted = Post.findByIdAndDelete(postID);
+  return postDeleted;
 };
 
 // PATCH POST /post/:id
 
-const update = async (id, data) => {
-  const post = await Post.findById(id);
-  if (data?.hashtags) {
-    let hashtagsIndex = Object.keys(post.hashtags);
-    hashtagsIndex.forEach((hashtag) => {
-      data.hashtags[hashtag]
-        ? (post.hashtags[hashtag] = data.hashtags[hashtag])
-        : (data.hashtags[hashtag] = post.hashtags[hashtag]);
-    });
+const update = async (postID, data, ownerID) => {
+  const post = await Post.findById(postID);
+  const isIdentical = post.postOwner === ownerID;
+  let isLikesOrBookmarks =
+    Object.keys(data)[0] === 'likes' || Object.keys(data)[0] === 'bookmarks';
+  if (!isLikesOrBookmarks) {
+    if (isIdentical) {
+      if (data?.hashtags) {
+        let hashtagsIndex = Object.keys(post.hashtags);
+        hashtagsIndex.forEach((hashtag) => {
+          data.hashtags[hashtag]
+            ? (post.hashtags[hashtag] = data.hashtags[hashtag])
+            : (data.hashtags[hashtag] = post.hashtags[hashtag]);
+        });
+      }
+    } else {
+      throw createError(403, 'You are not the owner of this post');
+    }
   }
-  const postUpdate = await Post.findByIdAndUpdate(id, data, {
+  const postUpdate = await Post.findByIdAndUpdate(postID, data, {
     returnDocument: 'after'
   });
-  console.log(data);
   return postUpdate;
 };
 

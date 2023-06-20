@@ -1,8 +1,27 @@
 const jwt = require('../lib/jwt.lib.js');
-const createError = require('http-errors');
-const Post = require('../models/post.model');
 
 // * Autenticacion de usuario, solamente importar el middleware en donde se necesite
+const auth = async (req, res, next) => {
+  try {
+    //console.log('Headers', req.headers);
+    const authorization = req.headers.authorization || '';
+    const token = authorization.replace('Bearer ', '');
+    const isVerified = jwt.verify(token);
+    console.log('verified ID', isVerified.id);
+    res.locals.postOwner = isVerified.id;
+    next();
+  } catch (err) {
+    res.status(401).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+
+module.exports = auth;
+
+/* 
+
 const auth = async (req, res, next) => {
   try {
     console.log('Headers', req.headers);
@@ -37,3 +56,6 @@ const auth = async (req, res, next) => {
 };
 
 module.exports = auth;
+
+
+*/
