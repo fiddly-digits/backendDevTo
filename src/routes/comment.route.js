@@ -34,7 +34,7 @@ router.post('/', auth, async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const commentsFromPost = await getFromPost(req.query.postID);
-    console.log(commentsFromPost == []);
+    console.log('Comments from post', commentsFromPost == []);
     res.json({
       success: true,
       data: commentsFromPost
@@ -49,6 +49,7 @@ router.get('/', async (req, res) => {
 });
 
 router.delete('/:id', auth, async (req, res) => {
+  //check with lenght
   try {
     const removedComment = await remove(req.params.id, res.locals.owner);
     if (!removedComment) {

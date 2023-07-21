@@ -4,7 +4,7 @@ const createError = require('http-errors');
 const create = (postID, userID, data) => {
   data['commentsFromPostWithIdentifier'] = postID;
   data['commenterID'] = userID;
-  console.log(data);
+  console.log('data from comments', data);
   const comment = Comment.create(data);
   return comment;
 };
