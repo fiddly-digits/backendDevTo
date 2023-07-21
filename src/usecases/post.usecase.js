@@ -38,6 +38,7 @@ const remove = async (postID, ownerID) => {
 
 const update = async (postID, data, ownerID) => {
   const post = await Post.findById(postID);
+  console.log('Data del Update', data);
   const isIdentical = post.postOwner === ownerID;
   let isLikesOrBookmarks =
     Object.keys(data)[0] === 'likes' || Object.keys(data)[0] === 'bookmarks';
@@ -63,10 +64,7 @@ const update = async (postID, data, ownerID) => {
 
 const create = (data, postOwner) => {
   const time = new Date();
-  console.log('FECHA UNIX', time);
   const msec = Date.parse(time);
-  console.log('fecha parseada ', msec);
-  console.log('El Post Owner en el usecase', postOwner);
   data['isRelevant'] = Math.random() < 0.5;
   data['likes'] = 0;
   data['bookmarks'] = 0;
