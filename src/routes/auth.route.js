@@ -1,13 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { login } = require('../usecases/user.usecase.js');
+const { login } = require("../usecases/user.usecase.js");
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const token = await login(req.body.email, req.body.password);
     res.json({
       success: true,
-      data: token
+      data: token,
     });
   } catch (err) {
     res

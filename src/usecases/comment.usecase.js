@@ -1,9 +1,9 @@
-const Comment = require('../models/comment.model');
-const createError = require('http-errors');
+const Comment = require("../models/comment.model");
+const createError = require("http-errors");
 
 const create = (postID, userID, data) => {
-  data['commentsFromPostWithIdentifier'] = postID;
-  data['commenterID'] = userID;
+  data["commentsFromPostWithIdentifier"] = postID;
+  data["commenterID"] = userID;
   console.log(data);
   const comment = Comment.create(data);
   return comment;
@@ -11,7 +11,7 @@ const create = (postID, userID, data) => {
 
 const getFromPost = (postID) => {
   const commentsFromPost = Comment.find({
-    commentsFromPostWithIdentifier: postID
+    commentsFromPostWithIdentifier: postID,
   });
   return commentsFromPost;
 };
@@ -19,7 +19,7 @@ const getFromPost = (postID) => {
 const remove = (commentID, ownerID) => {
   const removedComment = Comment.findOneAndDelete({
     _id: commentID,
-    commenterID: ownerID
+    commenterID: ownerID,
   });
   return removedComment;
 };
@@ -28,10 +28,10 @@ const update = (commentID, ownerID, data) => {
   const updatedComment = Comment.findOneAndUpdate(
     {
       _id: commentID,
-      commenterID: ownerID
+      commenterID: ownerID,
     },
     data,
-    { returnDocument: 'after' }
+    { returnDocument: "after" }
   );
   return updatedComment;
 };
